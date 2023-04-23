@@ -1,0 +1,35 @@
+@page "/processcrud"
+@using hackathon_21._04._23
+
+
+<PageTitle>Процесс</PageTitle>
+
+<h1>Новый процесс</h1>
+
+<div class="center">
+    <form>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="group">
+                    <input @bind="@name" type="text" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label id="form">Название аккаунта</label>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="center">
+    <button class="btn btn-outline-primary" @onclick="@Check">Зарегистрировать</button>
+</div>
+<Node></Node>
+
+@code {
+    string name = "";
+
+    public void Check()
+    {
+        
+    }
+}

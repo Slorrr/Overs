@@ -1,0 +1,172 @@
+﻿@using Microsoft.AspNetCore.Components;
+@using System.Reflection;
+@inject NavigationManager navigation
+@inject PageHistoryState history
+
+@if (settings != null)
+{
+    <h3>@settings.Title</h3>
+
+    <form>
+        <div class="group">      
+
+        </div>
+        <div class="row">
+            <div class="group">
+
+                    @for (int i = 0; i < settings.Values.Count; i++)
+                    {
+                        int tmp = i;
+                        <div class="group">
+                            <input @bind=@settings.Values[tmp].Value type="text" required>
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label id="form">@settings.Values[tmp].Caption </label>
+                        </div>
+                    }
+
+
+            </div>
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@(()=>AcceptMethod())" value=@settings.ButtonAcceptCaption />
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Отмена" />
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    @if (history.CanGoBack())
+    {
+        navigation.NavigateTo(history.GetGoBackPage());
+    }
+}
+
+@code {
+
+    [Parameter]
+    public CRUDPageSettings? settings { get; set; }
+
+    protected object result;
+
+    protected void AcceptMethod()
+    {
+        settings.Accept();
+    }
+
+    protected void Cancel()
+    {
+    @if (history.CanGoBack())
+        {
+            navigation.NavigateTo(history.GetGoBackPage());
+        }
+
+    }
+
+    public class CRUDPageSettings
+    {
+        public delegate object? methAccept();
+        public methAccept AcceptMethod;
+        public event Action<object> eAccept;
+        public Type type;
+        public string Title = "";
+        public Mode currentMode = Mode.Read;
+        public List<CRUDItem> Values { get; set; }
+        public string ButtonAcceptCaption;
+        public string ButtonCancelCaption;
+
+
+
+        public enum Mode
+        {
+            Create,
+            Read,
+            Update,
+            Delete
+        }
+
+        //var instance = System.Runtime.Serialization.FormatterServices.Get UninitializedObject(typeof(MyClass)) as MyClass;
+
+        /// <summary>
+        /// Настройка создаваемого CRUD
+        /// </summary>
+        /// <param name="Title">Название страницы</param>
+        /// <param name="MainObjectType">Тип передаваемого объекта</param>
+        /// <param name="Values">Значения в виде кортежа (Название поля, отображаемое имя, отображаемое значение (null если пустое))</param>
+        /// <param name="Mode">Режим (создание, чтение, обновление, удаление)</param>
+        /// <param name="AcceptCaption">Название кнопки подтверждения</param>
+        /// <param name="CancelCaption">Название кнопки отмены</param>
+        /// <param name="accept">Делегат действия подтверждения</param>
+        public CRUDPageSettings(
+            string title, 
+            Type mainObjectType,
+            List<CRUDItem> values, 
+            Mode Mode, 
+            string acceptCaption,
+            string cancelCaption,
+            methAccept accept)
+        {
+            this.AcceptMethod = accept;
+            this.ButtonAcceptCaption = acceptCaption;
+            this.ButtonCancelCaption = cancelCaption;
+            this.currentMode = Mode;
+            this.type = mainObjectType;
+            this.Title = title;
+            this.Values = values;
+        }
+
+        public void Accept()
+        {
+            var instance = CreateInstance(this.type);  
+            if (instance != null)
+            {
+                foreach (CRUDItem item in Values)
+                {
+                    foreach (PropertyInfo prop in instance.GetType().GetProperties())
+                    {
+                        if (prop.Name==item.Name)//нашли нужное свойство
+                        {
+                            prop.SetValue(instance, item.Value);
+                        }
+                    }
+                }
+                if(eAccept!=null)
+                {
+                    eAccept(instance);
+                }
+
+            }
+        }  
+
+        public object? CreateInstance(Type type)
+        {
+            if (type.GetConstructor(Type.EmptyTypes) == null)
+            {
+                return null;
+                throw new ArgumentException("Тип не имеет конструктора без параметров.", nameof(type));
+            }
+            else
+            {
+                return Activator.CreateInstance(type);
+            }
+
+        }
+    }
+
+    public class CRUDItem
+    {
+        public string Name { get; set; } = "";
+        public string Caption { get; set; } = "";
+        public string Value { get; set; } = "";
+
+        public CRUDItem(string name, string caption, string value)
+        {
+            Name = name;
+            Caption = caption;
+            Value = value;
+        }
+    }
+}

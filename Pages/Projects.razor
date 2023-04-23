@@ -1,0 +1,87 @@
+﻿@page "/projects"
+@using hackathon_21._04._23.Pages
+@inject ServicePageEngine engine
+@inject NavigationManager NavigationManager
+@inject DB db
+
+<h3>Все проекты компании</h3>
+<button class="but" @onclick="Create"><p style="color:#FFFFFF">Добавить</p> </button>
+
+<table class="table" style="color:white">
+    <thead>
+        <tr>
+            
+            <th>№ п/п</th>
+            <th>Контрагент</th>
+            <th>Сумма</th>
+            <th>Срок</th>
+            <th>Действия</th>
+
+  
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (project item in db.projects)
+        {
+            <tr>
+
+                <td>@item.Id.ToString()</td>
+                <td>@item.Name.ToString()</td>
+                <td>@item.Money.ToString()</td>
+                <td>@item.srok.ToString()</td>
+                <td>
+                    <input type="button" class="btn btn-primary btn-sm" @onclick="Read" value="Подробнее" />
+                </td>
+
+
+                <td>
+                    <input type="button" class="btn btn-primary btn-sm" @onclick="Update" value="Редактировать" />
+                </td>
+
+
+                <td>
+                    <input type="button" class="btn btn-primary btn-sm" @onclick="Delete" value="Удалить" />
+                </td>
+
+                <td>
+                    <input type="button" class="btn btn-primary btn-sm" @onclick="Comment" value="Дополнительно" />
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code {
+
+
+
+    public void Create()
+    {
+        NavigationManager.NavigateTo("createproject"); 
+    }
+
+    public void Read()
+    {
+
+    }
+
+    public void Update()
+    {
+
+    }
+
+    public void Delete()
+    {
+
+    }
+
+    public void Comment()
+    {
+        
+    }
+
+
+}

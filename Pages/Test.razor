@@ -1,0 +1,27 @@
+@page "/test"
+
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+
+<h1>My D3 Component</h1>
+
+<div id="d3-container"></div>
+
+<div id="node-editor" style="position: absolute; display: none; background-color: white; border: 1px solid black; padding: 10px;">
+    <h3>Node Editor</h3>
+    <label for="node-id-input">Node ID:</label>
+    <input type="text" id="node-id-input">
+    <button id="save-node">Save</button>
+    <button id="close-editor">Close</button>
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("createGraph");
+        }
+    }
+}
+

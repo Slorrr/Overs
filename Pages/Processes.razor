@@ -1,0 +1,60 @@
+﻿@page "/processes"
+@using hackathon_21._04._23
+@inject NavigationManager navigation
+
+
+<button class="but" @onclick = "AddNew"><p style="color:#FFFFFF">Добавить</p> </button>
+
+    <img src="images/image.png" width = "1200px"/>
+
+
+
+
+@code {
+
+    public void AddNew()
+    {
+        navigation.NavigateTo("/newprocess");
+    }
+
+    Proc main = new Proc(null);
+
+    class Proc
+    {
+        public Proc Parent = null;
+        public List<Proc> Child = new List<Proc>();
+        int w = 0;
+        int h = 0;
+        int percent = 0;
+
+        public Proc(Proc par)
+        {
+            Random random = new Random(DateTime.Now.Millisecond);
+            if (par!=null)
+            {
+                percent = random.Next(0, par.percent);
+            }
+            else
+            {
+                percent = random.Next(50, 100);
+            }
+
+        }
+
+        public void Add()
+        {
+            Child.Add(new Proc(null));
+        }
+    }
+
+    class liner
+    {
+        int w1 = 0;
+        int h1 = 0;
+        
+        int w2 = 0;
+        int h2 = 0;
+
+        int percent = 0;
+    }
+}

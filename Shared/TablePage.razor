@@ -1,0 +1,141 @@
+﻿<h2>@settings.Title</h2>
+    @if (settings.Headers != null && settings.Data != null)
+    {
+        @if (settings.NeedCreateButton)
+            {
+                <td>
+                    <input type="button" class="btn btn-primary" @onclick ="@(()=>settings.CreateMethod())" value="Создать"/>
+                </td>
+            }
+
+        <table class="table">
+            <thead>
+                <tr>
+                     @foreach(string header in settings.Headers)
+                     {
+                         <th>@header</th>
+                     }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (List<string> line in settings.Data)
+                {
+                    <tr>
+                        @foreach (string value in line)
+                        {
+                            <td>@value</td>
+                        }
+                        @if (settings.NeedReadButton)
+                        {
+                            <td>
+                            <input type="button" class="btn btn-primary btn-sm" @onclick="@(() => settings.ReadMethod(Convert.ToInt32(line[0])))" value="Подробнее" />
+                            </td>
+                        }
+                        @if (settings.NeedUpdateButton)
+                        {
+                            <td>
+                            <input type="button" class="btn btn-primary btn-sm" @onclick="@(() => settings.UpdateMethod(Convert.ToInt32(line[0])))" value="Редактировать" />
+                            </td>
+                        }
+                        @if (settings.NeedDeleteButton)
+                        {
+                            <td>
+                            <input type="button" class="btn btn-primary btn-sm" @onclick="@(() => settings.DeleteMethod(Convert.ToInt32(line[0])))" value="Удалить" />
+                            </td>
+                        }
+                        @if (settings.NeedExtraOneButton)
+                        {
+                            <td>
+                                <input type="button" class="btn btn-primary btn-sm" @onclick="@(() => settings.ExtraOneMethod(Convert.ToInt32(line[0])))" value="Дополнительно"/>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+    
+@code {
+
+    /// <summary>
+    /// Экземпляр настройки таблицы
+    /// </summary>
+    [Parameter]
+    public TablePageSettings settings { get; set; }
+
+    /// <summary>
+    /// Класс для настройки содержимого компонента таблицы
+    /// </summary>
+    public class TablePageSettings
+    {
+        public delegate void methCreate();
+        public delegate void methRead(int Id);
+        public delegate void methUpdate(int Id);
+        public delegate void methDelete(int Id);
+        public delegate void methExtraOne(int Id);
+
+        /// <summary>
+        /// Класс для настройки содержимого компонента таблицы
+        /// </summary>
+        public TablePageSettings(string title, List<string> headerData, List<List<string>>? allData = null,
+        bool needCreate = false,
+        methCreate? create = null,
+        bool needRead = false,
+        methRead? read = null,
+        bool needUpdate = false,
+        methUpdate? update = null,
+        bool needDelete = false,
+        methDelete? delete = null,
+        bool needExtraOne = false,
+        methExtraOne? extraOne = null)
+        {
+            Title = title;
+            Headers = headerData;
+            if (allData!=null)
+            {
+                Data = allData;
+            }
+            else
+            {
+                Data = new List<List<string>>();
+            }
+
+            NeedCreateButton = needCreate;
+            NeedReadButton = needRead;
+            NeedUpdateButton = needUpdate;
+            NeedDeleteButton = needDelete;
+            NeedExtraOneButton = needExtraOne;
+
+            CreateMethod = create;
+            ReadMethod = read;
+            UpdateMethod = update;
+            DeleteMethod = delete;
+            ExtraOneMethod = extraOne;
+
+            
+        }
+
+        public string Title = "";
+
+        public List<string>       Headers = new List<string>();
+        public List<List<string>> Data    = new List<List<string>> {new List<string>()};
+
+        public bool NeedCreateButton = false;
+        public bool NeedReadButton = false;
+        public bool NeedUpdateButton = false;
+        public bool NeedDeleteButton = false;
+        public bool NeedExtraOneButton = false;
+
+        public methCreate CreateMethod;
+        public methRead   ReadMethod;
+        public methUpdate  UpdateMethod;
+        public methDelete DeleteMethod;
+        public methExtraOne ExtraOneMethod;
+    }
+
+
+ 
+
+    
+}

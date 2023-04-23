@@ -1,0 +1,83 @@
+﻿body {
+}
+
+.fon{
+    /* Rectangle 405 */
+    margin: 5px;
+    background: #2B2B4B;
+    border-radius: 6px;
+    padding: 5px;
+    text-align: left;
+}
+
+.card1 {
+    padding-top: 8px;
+    padding-left 15px;
+    text-align: left;
+    margin: 4px;
+    width: 220px;
+    height: 80px;
+
+    background: linear-gradient(89.69deg, #F39034 2.03%, #FF2727 99.73%);
+    box-shadow: 4px 4px 10px rgba(244, 144, 53, 0.3);
+    border-radius: 12px;
+}
+
+.card2 {
+    padding-top: 8px;
+    padding-left 15px;
+    text-align: left;
+    margin: 4px;
+    width: 220px;
+    height: 80px;
+
+    background: linear-gradient(270deg, #003AD2 0%, #0097EC 100%);
+    box-shadow: 4px 4px 10px rgba(1, 149, 236, 0.3);
+    border-radius: 12px;
+}
+
+.card3 {
+    padding-top: 8px;
+    padding-left 15px;
+    text-align: left;
+    margin: 4px;
+    width: 220px;
+    height: 80px;
+
+    background: linear-gradient(270.23deg, #006A2B 0.19%, #1FD071 99.8%);
+    box-shadow: 4px 4px 10px rgba(31, 208, 112, 0.3);
+    border-radius: 12px;
+}
+
+.card4 {
+    padding-top: 8px;
+    padding-left 15px;
+    text-align: left;
+    margin: 4px;
+    width: 220px;
+    height: 80px;
+
+    background: linear-gradient(269.97deg, #5900C9 0.02%, #9852F0 99.98%);
+    box-shadow: 4px 4px 10px rgba(151, 80, 239, 0.3);
+    border-radius: 12px;
+}
+
+.Statistic1 {
+
+    width: 300px;
+    height: 240px;
+}
+
+.Statistic2 {
+
+    width: 790px;
+    height: 240px;
+}
+
+.Statistic3 {
+
+    width: 1100px;
+    height: 400px;
+}
+
+

@@ -1,0 +1,20 @@
+﻿.circle {
+    height: 50px;
+    width: 50px;
+    background-color: #000033;
+    border-radius: 50%;
+}
+
+.raz { /* пример из «Круговая диаграмма с одним значением» */
+    width: 7em;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: conic-gradient(aqua, darkturquoise var(--pie-p, 0%), whitesmoke 0);
+    --pie-b: 1em;
+    mask: radial-gradient(farthest-side,#0000 calc(99% - var(--pie-b)),#000 calc(100% - var(--pie-b)));
+}
+
+
+.node {
+        
+}

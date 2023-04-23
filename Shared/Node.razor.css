@@ -1,0 +1,40 @@
+﻿
+
+.pProcessName { 
+
+    width: 60px;
+    height: 13.6px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 9.71931px;
+    line-height: 12px;
+    color: #FFFFFF;
+}
+
+.pProcessLine {
+    width: 60px;
+    height: 13.6px;
+}
+
+.pProcessPercent {
+    width: 60px;
+    height: 13.6px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 9.71931px;
+    line-height: 12px;
+    color: #FFFFFF;
+}
+
+.circle {
+    position: absolute;
+    width: 88.85px;
+    height: 88.85px;
+    border-radius: 50%;
+    background: #ff6a00
+}
+
+
+
